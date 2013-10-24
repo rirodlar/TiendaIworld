@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Iworld</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+</head>
+<body>
+
+    <!-- ***************** LOGIN ********************** -->
+    <section id="login" data-role="page">
+        <header data-role="header">
+            <h1>Ingreso a sistema Iworld</h1>
+        </header>
+        <article data-role="content">
+
+            <div align="center">
+                <img src="img/el-mundo.png">
+            </div>
+           <form>
+                <div data-role="fieldcontain">
+                   <label for="nombre">Nombre de Usuario</label>
+                   <input type="text" name="nombre" id="nombre">
+                </div>  
+                <div data-role="fieldcontain">
+                   <label for="password">contraseña</label>
+                   <input type="password" name="password" id="password">
+               </div>
+                <a href="#home" data-role="button">Ingresar</a>
+            </form>
+        </article>
+     <footer data-role="footer" data-id="menu"  data-position="fixed">
+            <p>Iword Chile (c)</p>     
+        </footer>
+    </section>
+
+    <!-- ***************** HOME ********************** -->
+
+    <section id="home" data-role="page">
+        <header data-role="header">
+            <a href="#login" data-role="button">Logout</a> <h1>Resumen del dia</h1>
+        </header><!-- /header -->
+        <article data-role="content">
+          
+               <p>Total Cajas: <p>
+               <p>Total Ventas:</p>
+
+               <br/>
+            <div align="center">
+                <img src="img/line-graph.gif">
+            </div>
+
+            <div data-role="controlgroup">
+                <a href="#tienda" data-role="button">Tienda Mall Mirage</a>
+                <a href="#tienda" data-role="button">Tienda Centro Temuco</a>
+                <a href="#tienda" data-role="button">Tienda Puerto Montt</a>
+            </div>
+
+
+        </article><!-- /content -->
+        <footer data-role="footer">
+            <h1>Footer</h1>
+        </footer><!-- /footer -->
+    </section><!-- /page -->
+
+    <section id="tienda" data-role="page">
+        <header data-role="header">
+           <a href="#home" data-role="button">Atras</a> <h1>Tienda Mall Mirage</h1>
+        </header><!-- /header -->
+        <article data-role="content">
+               <p>Total Ventas del dia:</p>
+               <p>Total Cajas del dia: <p>
+                <br/>
+
+                <p>
+                <ul data-role="listview">
+                    <li><a href="#ventas">Listado de Ventas</a></li>
+                    <li><a href="#cajas">Listado de Cajas</a></li>
+                </ul>
+            </p>
+
+
+        </article><!-- /content -->
+        <footer data-role="footer">
+            <h1>Footer</h1>
+        </footer><!-- /footer -->
+    </section><!-- /page -->
+
+<!-- ***************** VENTAS ********************** -->
+    <section id="ventas" data-role="page">
+        <header data-role="header">
+            <a href="#tienda" data-role="button">Atras</a> <h1>Ventas Tienda Mall Mirage</h1>
+        </header><!-- /header -->
+        <article data-role="content">
+             <p>
+                <ul data-role="listview">
+                    <li><a href="#detalleVenta">Boleta 254 - Efectivo $34000</a></li>
+                    <li><a href="#detalleVenta">Factura 136 - Efectivo $34000</a></li>
+                    <li><a href="#detalleVenta">Boleta 254 - Efectivo $64000</a></li>
+                    <li><a href="#detalleVenta">Boleta 254 - Efectivo $34000</a></li>
+                    <li><a href="#detalleVenta">Facturaa 136 - Efectivo $74000</a></li>
+                    <li><a href="#detalleVenta">Boleta 136 - Efectivo $64500</a></li>
+                </ul>
+            </p>
+        </article><!-- /content -->
+        <footer data-role="footer">
+            <h1>Footer</h1>
+        </footer><!-- /footer -->
+    </section><!-- /page -->
+
+<!-- ***************** CAJAS ********************** -->
+      <section id="cajas" data-role="page">
+        <header data-role="header">
+            <a href="#tienda" data-role="button">Atras</a> <h1>Ventas Tienda Mall Mirage</h1>
+        </header><!-- /header -->
+        <article data-role="content">
+             <p>
+                <ul data-role="listview">
+                    <li><a href="#detalleCaja">Caja 254 - Abierta $34000</a></li>
+                    <li><a href="#detalleCaja">Caja 136 - Abierta $11000</a></li>
+                    <li><a href="#detalleCaja">Caja 135 - Cerrada $54000</a></li>
+                    <li><a href="#detalleCajas">Caja 133 - Abierta $34000</a></li>
+                    <li><a href="#detalleCaja">Caja 132 - Cerrada $64000</a></li>
+                  
+                </ul>
+            </p>
+        </article><!-- /content -->
+        <footer data-role="footer">
+            <h1>Footer</h1>
+        </footer><!-- /footer -->
+    </section><!-- /page -->
+
+<!-- ***************** DETALLE VENTAS ********************** -->
+
+    <section id="detalleVenta" data-role="page">
+        <header data-role="header">
+          <a href="#ventas" data-role="button">Atras</a>  <h1>Boleta 174</h1><a href="#ventas" data-role="button">eliminar</a>
+        </header><!-- /header -->
+        <article data-role="content">
+           <ul data-role="listview" data-inset="true" id="lista">
+                
+                </ul>
+                <script>
+                $(document).ready(function() {
+                $.ajax({
+                  url: 'http://iworld.ingehost.cl/movil/detalleventa/2?format=json',
+                  type: 'GET',
+                  dataType: 'json',
+                  success: function(data) { 
+                    $('#formaDePago').text(data.formaDePago);
+                    $('#total').text(data.total);
+                    $('#vendedor').text(data.vendedor);
+                    
+                    },
+                  error: function() { alert('no se puedo!'); },
+                  beforeSend: setHeader
+                });
+              });
+
+              function setHeader(xhr) {
+                xhr.setRequestHeader('Authorization', 'Token 89c44636e3f071baa0f67fe4964e6ae244d0fad7');
+              }
+                </script>
+
+                <h2>
+                Detalle venta
+            </h2>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    Forma de Pago:
+                </div>
+                <div class="ui-block-b" id="formaDePago">
+                </div>
+                <div class="ui-block-a">
+                    Total:
+                </div>
+                <div class="ui-block-b"id="total">
+                </div>
+                <div class="ui-block-a">
+                    Vendedor 
+                </div>
+                <div class="ui-block-b"id="vendedor">
+                </div>
+            </div>
+            <h2>
+                Productos
+            </h2>
+            <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                <li data-theme="c">
+                    <a href="#" data-transition="slide">
+                        Button
+                    </a>
+                </li>
+            </ul>
+        </article><!-- /content -->
+        <footer data-role="footer">
+            <h1>Footer</h1>
+        </footer><!-- /footer -->
+    </section><!-- /page -->
+
+    <section id="detalleCaja" data-role="page">
+        <header data-role="header">
+            <a href="#cajas" data-role="button">Atras</a>  <h1>Caja 174</h1> <a href="#ventas" data-role="cajas">Eliminar</a> 
+        </header><!-- /header -->
+        <article data-role="content">
+            <p>Content</p>
+        </article><!-- /content -->
+        <footer data-role="footer">
+            <h1>Footer</h1>
+        </footer><!-- /footer -->
+    </section><!-- /page -->
+
+</body>
+</html>
+
+
