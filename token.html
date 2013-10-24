@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5//EN"
+    "http://www.w3.org/TR/html5/html5.dtd"
+    >
+<html lang="en">
+<head>
+
+     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <title>test token></title>
+</head>
+<body>
+    <!-- Insert your content here -->
+   <script> 
+  $.ajax({
+
+    url: 'http://iworld.ingehost.cl/api-loggin/',
+    data: {username: "admin", password: "admin" },
+    type: 'post',
+    crossDomain: true,
+    dataType: 'json',
+    success: function(data) { alert("token: " +data.token); },
+    error: function() { alert('Failed!'); },
+    
+});</script>
+</body>
+</html>
