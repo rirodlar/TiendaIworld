@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"> 
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
     <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 </head>
 <body>
@@ -29,7 +30,7 @@
                    <label for="password">contraseña</label>
                    <input type="password" name="password" id="password">
                </div>
-                <a href="#home" data-role="button">Ingresar</a>
+                <button id="btnLogin" data-role="button">Ingresar</button>
             </form>
         </article>
      <footer data-role="footer" data-id="menu"  data-position="fixed">
@@ -200,7 +201,7 @@
             <h1>Footer</h1>
         </footer><!-- /footer -->
     </section><!-- /page -->
-<!-- ***************** DETALLE CAJAS ********************** -->
+
     <section id="detalleCaja" data-role="page" >
         <header data-role="header">
             <a href="#cajas" data-role="button">Atras</a>  <h1>Caja 174</h1> <a href="#ventas" data-role="cajas">Eliminar</a> 
@@ -212,8 +213,10 @@
             <h1>Footer</h1>
         </footer><!-- /footer -->
     </section><!-- /page -->
-
+<script src="js/servicios.js"></script>
+    <script src="js/eventos.js"></script>
 </body>
+    
 </html>
 
 
