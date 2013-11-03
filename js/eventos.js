@@ -49,29 +49,24 @@ recuperaToken: function(){
 			alert("ingrese un nombre de usuario y password");
 
 		}else{
-				$.ajax({
-				    url:   App.baseapiurl +"/api-loggin/",
-				    data:  {username: usuario, password: password },
-				    type: 'post',
-				    crossDomain: true,
-				    dataType: 'json',
-				    success: function(data) { 
-					    	App.token = data.token;
-					    	location.href="#home";
-					    	App.loadHome();
-				    },
-				    error: function() { 
-				    		var token = "";
-				    		alert("Error en la autentificación");
-				    },
-			});
+
+									$.post( App.baseapiurl +"/api-loggin/", {username: usuario, password: password })
+										  .done(function( data ) {
+										          App.token = data.token;
+															    	$.mobile.changePage("#home")
+													 		   	App.getDataHome();
+										  })
+										  .error(function( data ) {
+										          var token = "";
+													 		   	alert("Error en la autentificación");
+										  });
 		}
 },
 /**
  * Cargar el HOME
  * Uso de template UNDESCORE
  */
-loadHome: function(){
+getDataHome: function(){
 		//Obtener la lista de las tiendas
     $.ajax({            
 		        url: App.baseapiurl + "/movil/tiendas",
@@ -122,23 +117,24 @@ loadHome: function(){
 loadTienda: function(tienda_id,nombre){
 
 			$("#nombreTienda").text(nombre);
+			//Obtener la venta del dia
 			$.ajax({            
 			        url:  App.baseapiurl + "/movil/totalventastienda"+tienda_id,
 			        type: 'GET',
 			        dataType: 'json',
 			        success: function(data) {
-			           $("#detalleVentaDia").html(data);
+			           $("#totalVentaDia").html(data);
 			        },
 			        error: function() { alert('error al cargar la tienda '); },
 			        beforeSend: App.setHeader 
 			});
-
+			//Obtener la caja del dia
 			$.ajax({            
 			        url:  App.baseapiurl + "/movil/totalcajatienda"+tienda_id,
 			        type: 'GET',
 			        dataType: 'json',
 			        success: function(data) {
-			           $("#detalleCajaDia").html(data);
+			           $("#totalCajaDia").html(data);
 			        },
 			        error: function() { alert('error al cargar el total de la caja '); },
 			        beforeSend: App.setHeader 
@@ -149,38 +145,38 @@ loadTienda: function(tienda_id,nombre){
 
 },
 /**
- * Cargar la lista de las Ventas
+ * obtener la lista de las Ventas
  * @param {int} venta_id - El identificador de la venta
  */
 getListadoVentas: function(){
-
+	  //IR A SECCION VENTAS 
+	  $.mobile.changePage("#ventas")
+		  //Añadir el titulo a la seccion #ventas
 			$("#nombreVentaTienda").text("ventas "+ App.nombreTienda);
-
-
-    $.ajax({            
+   //Obtener el listado de ventas
+   $.ajax({            
 	        url:  App.baseapiurl + "/movil/ventas/" +App.tienda_id,
 	        type: 'GET',
 	        dataType: 'json',
 	        success: function(data) {
-
-
 	        	    $("#listarVentas").html("");
 		            var lista = $("#listarVentas");
 		            $.each(data, function(i,item){
-
 		            	var html = "<li><a href='#detalleVenta' onclick='App.getDetalleVenta("+item.id+")' >" + App.tipoComprobante[item.tipoComprobante] +" "+  item.id + " - " + App.formaPago[item.formaPago] + " $ "+ item.total + "</li>";
 		 												lista.append(html);
 		            })
 		           lista.listview('refresh');
-	            
 	        },
 	        error: function() { alert('error al cargar el loadListaVentas) '); },
 	        beforeSend: App.setHeader
 	});
 },
-
+/**
+ * obtener la lista de las cajas de una tienda
+ */
 getListadoCajas:function(){
-
+ 	//IR SECCION CAJAS
+		 $.mobile.changePage("#cajas")
 			$("#nombreCajaTienda").text("Cajas "+ App.nombreTienda);
 
 		 $.ajax({            
@@ -202,13 +198,15 @@ getListadoCajas:function(){
 			});
 
 },
-
+/**
+ * obtener el detalle de una venta
+ */
 getDetalleVenta: function(boleta_id){
 	App.boleta_id = boleta_id;
+	//Añadir un titulo a la seccion #detalleVenta
 	$("#nombreBoleta").text("Boleta " +boleta_id);
 
-	console.log("getDetalleVenta");
-		 $.ajax({
+	 $.ajax({
 	        url:  App.baseapiurl + "/movil/detalleventa/"+boleta_id,
          type: 'GET',
          dataType: 'json',
@@ -217,12 +215,14 @@ getDetalleVenta: function(boleta_id){
                $('#total').text(data.total);
                $('#vendedor').text(data.vendedor);
 
+                $("#listarProductos").html("");
+						          var lista = $("#listarProductos");
+
                $.each(data.productos,function(i,item){
-		               		 $("#listarProductos").html("");
-						              var lista = $("#listarProductos");
+		               		
 						              $.each(data.productos, function(i,item){
 						              console.log(item.codigo);
-						            	    var html = "<li data-theme='c'><a data-transition='slide' href='#'>" + item.codigo +" - "+ item.nombre +" ("+ item.cantidad+ ")</li>";
+						            	    var html = "<li><a href='#'>" + item.codigo +" - "+ item.nombre +" ("+ item.cantidad+ ")</a></li>";
 						 												    lista.append(html);
 						            })
 						           lista.listview('refresh');
@@ -236,6 +236,54 @@ getDetalleVenta: function(boleta_id){
 getDetalleCaja: function(caja_id){
 				App.caja_id = caja_id;
     $("#nombreCaja").text("Caja " +caja_id);
+
+    $.ajax({
+	        url:  App.baseapiurl + "/movil/detallecaja/"+caja_id,
+         type: 'GET',
+         dataType: 'json',
+         success: function(data) { 
+               
+         			console.log(data)
+       			  $("#listarIngresos").html("");
+						       var lista = $("#listarIngresos");
+         			$.each(data.ingresos, function(i,item){
+         					  var html = "<li><a>" + item.monto +" - "+ item.asunto +" ("+ item.vendedor+ ")</a></li>";
+						 									lista.append(html);
+						      })
+
+						       lista.listview('refresh');
+          	
+          	 $("#listarEgresos").html("");
+						       var lista = $("#listarEgresos");
+						      $.each(data.egresos, function(i,item){
+         						
+           				var html = "<li><a>" + item.monto +" - "+ item.asunto +" ("+ item.vendedor+ ")</a></li>";
+						 									lista.append(html);	
+
+						      })
+						       lista.listview('refresh');
+
+
+                
+               // $('#formaDePago').text(data.formaDePago);
+               // $('#total').text(data.total);
+               // $('#vendedor').text(data.vendedor);
+
+               // $.each(data.productos,function(i,item){
+		             //   		 $("#listarProductos").html("");
+						         //      var lista = $("#listarProductos");
+						         //      $.each(data.productos, function(i,item){
+						         //      console.log(item.codigo);
+						         //    	    var html = "<li data-theme='c'><a data-transition='slide' href='#'>" + item.codigo +" - "+ item.nombre +" ("+ item.cantidad+ ")</li>";
+						 								// 				    lista.append(html);
+						         //    })
+						         //   lista.listview('refresh');
+               // });
+                
+         },
+         error: function() { alert('no se puedo!'); },
+              beforeSend: App.setHeader
+   });
 },
 
 logout:function(){
@@ -254,8 +302,8 @@ drawChart: function(){
   console.log("drawChart");
        var data = google.visualization.arrayToDataTable([
           ['Tienda', 'ventas'],
-          ['Temuco (Mall Mirage)', 1000   ],
-          ['Temuco (Centro)',  1170     ],
+          ['Temuco (Mall Mirage)', 1000],
+          ['Temuco (Centro)',  1170],
           ['Puerto Montt (Costanera)', 660  ],
         ]);
 

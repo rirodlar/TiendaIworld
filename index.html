@@ -11,12 +11,9 @@
     <script type="text/javascript">
          google.load('visualization', '1.0', {'packages':['corechart']});
     </script>
-
-
 </head>
     </head>
 <body>
-
     <!-- ***************** LOGIN ********************** -->
     <section id="login" data-role="page">
         <header data-role="header">
@@ -60,9 +57,7 @@
             <div align="center">
                  <div id="chart_div"></div>
             </div>
-
-         
-                <div data-role="controlgroup" id="listaTiendas"></div>
+            <div data-role="controlgroup" id="listaTiendas"></div>
            
         </article><!-- /content -->
         <footer data-role="footer" data-position="fixed">
@@ -76,14 +71,14 @@
         </header><!-- /header -->
         <article data-role="content">
 
-               <p>Total Ventas del dia: <span id="detalleVentaDia"></span></p>
-               <p>Total Cajas del dia: <span id="detalleCajaDia"></span> <p>
+                <p>Total Ventas del dia: <span id="totalVentaDia"></span></p>
+                <p>Total Cajas del dia: <span id="totalCajaDia"></span> <p>
                 <br/>
 
                 <p>
                 <ul data-role="listview">
-                    <li><a href="#ventas" onclick="App.getListadoVentas()">Listado de Ventas</a></li>
-                    <li><a href="#cajas" onclick="App.getListadoCajas()">Listado de Cajas</a></li>
+                    <li><a href="#" onclick="App.getListadoVentas()">Listado de Ventas</a></li>
+                    <li><a href="#" onclick="App.getListadoCajas()">Listado de Cajas</a></li>
                 </ul>
             </p>
 
@@ -165,11 +160,6 @@
 
              
             <ul id="listarProductos" data-role="listview" data-divider-theme="b" data-inset="true">
-                <!-- <li data-theme="c">
-                    <a href="#" data-transition="slide">
-                        Button
-                    </a>
-                </li> -->
             </ul>
         </article><!-- /content -->
         <footer data-role="footer" data-position="fixed">
@@ -179,10 +169,16 @@
 
     <section id="detalleCaja" data-role="page" >
         <header data-role="header">
-            <a href="#cajas" data-role="button">Atras</a>  <h1 id="nombreCaja"></h1> <a href="#ventas" data-role="cajas">Eliminar</a> 
+            <a href="#cajas" data-role="button">Atras</a>  <h1 id="nombreCaja"></h1><a href="#dialogPage" data-rel="dialog" data-role="button">Eliminar</a> 
         </header><!-- /header -->
         <article data-role="content">
-            <p>Content</p>
+            <h2>Total:</h2><span id="totalCaja">¿como se calcula el monto?</span>
+            <br/>
+            <h2>Ingreso:</h2>
+            <ul data-role="listview" id="listarIngresos"> </ul>
+            <br/>
+            <h2>Egreso:</h2>
+            <ul data-role="listview" id="listarEgresos"> </ul>
         </article><!-- /content -->
         <footer data-role="footer" data-position="fixed">
             <h1>Footer</h1>
