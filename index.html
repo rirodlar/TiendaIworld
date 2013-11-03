@@ -6,9 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"> 
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-
     <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+         google.load('visualization', '1.0', {'packages':['corechart']});
+    </script>
+
+
 </head>
+    </head>
 <body>
 
     <!-- ***************** LOGIN ********************** -->
@@ -24,13 +30,13 @@
            <form>
                 <div data-role="fieldcontain">
                    <label for="nombre">Nombre de Usuario</label>
-                   <input type="text" name="nombre" id="nombre">
+                   <input type="text" value="admin" name="nombre" id="nombre">
                 </div>  
                 <div data-role="fieldcontain">
                    <label for="password">contraseña</label>
-                   <input type="password" name="password" id="password">
+                   <input type="password" value="admin"  name="password" id="password">
                </div>
-                <button id="btnLogin" data-role="button">Ingresar</button>
+                <button type="button" id="btnLogin" data-role="button">Ingresar</button>
             </form>
         </article>
      <footer data-role="footer" data-id="menu"  data-position="fixed">
@@ -42,44 +48,42 @@
 
     <section id="home" data-role="page">
         <header data-role="header">
-            <a href="#login" data-role="button">Logout</a> <h1>Resumen del dia</h1>
+            <a href="#login" onclick="App.logout()" data-role="button">Logout</a> <h1>Resumen del dia</h1>
         </header><!-- /header -->
         <article data-role="content">
-          
-               <p>Total Cajas: <p>
-               <p>Total Ventas:</p>
+
+
+               <p>Total Cajas:  <span id="totalCaja"><p>
+               <p>Total Ventas: <span id="totalVenta"></p>
 
                <br/>
             <div align="center">
-                <img src="img/line-graph.gif">
+                 <div id="chart_div"></div>
             </div>
 
-            <div data-role="controlgroup">
-                <a href="#tienda" data-role="button">Tienda Mall Mirage</a>
-                <a href="#tienda" data-role="button">Tienda Centro Temuco</a>
-                <a href="#tienda" data-role="button">Tienda Puerto Montt</a>
-            </div>
-
-
+         
+                <div data-role="controlgroup" id="listaTiendas"></div>
+           
         </article><!-- /content -->
         <footer data-role="footer" data-position="fixed">
             <h1>Footer</h1>
-        </footer><!-- /footer -->
+        </footer>
     </section><!-- /page -->
 
     <section id="tienda" data-role="page">
         <header data-role="header">
-           <a href="#home" data-role="button">Atras</a> <h1>Tienda Mall Mirage</h1>
+           <a href="#home" data-role="button">Atras</a> <h1 id="nombreTienda"></h1>
         </header><!-- /header -->
         <article data-role="content">
-               <p>Total Ventas del dia:</p>
-               <p>Total Cajas del dia: <p>
+
+               <p>Total Ventas del dia: <span id="detalleVentaDia"></span></p>
+               <p>Total Cajas del dia: <span id="detalleCajaDia"></span> <p>
                 <br/>
 
                 <p>
                 <ul data-role="listview">
-                    <li><a href="#ventas">Listado de Ventas</a></li>
-                    <li><a href="#cajas">Listado de Cajas</a></li>
+                    <li><a href="#ventas" onclick="App.getListadoVentas()">Listado de Ventas</a></li>
+                    <li><a href="#cajas" onclick="App.getListadoCajas()">Listado de Cajas</a></li>
                 </ul>
             </p>
 
@@ -87,101 +91,70 @@
         </article><!-- /content -->
         <footer data-role="footer" data-position="fixed">
             <h1>Footer</h1>
-        </footer><!-- /footer -->
+        </footer>
     </section><!-- /page -->
 
 <!-- ***************** VENTAS ********************** -->
     <section id="ventas" data-role="page">
         <header data-role="header">
-            <a href="#tienda" data-role="button">Atras</a> <h1>Ventas Tienda Mall Mirage</h1>
+            <a href="#tienda" data-role="button">Atras</a> <h1 id="nombreVentaTienda"></h1>
         </header><!-- /header -->
         <article data-role="content">
+           
              <p>
-                <ul data-role="listview">
-                    <li><a href="#detalleVenta">Boleta 254 - Efectivo $34000</a></li>
-                    <li><a href="#detalleVenta">Factura 136 - Efectivo $34000</a></li>
-                    <li><a href="#detalleVenta">Boleta 254 - Efectivo $64000</a></li>
-                    <li><a href="#detalleVenta">Boleta 254 - Efectivo $34000</a></li>
-                    <li><a href="#detalleVenta">Facturaa 136 - Efectivo $74000</a></li>
-                    <li><a href="#detalleVenta">Boleta 136 - Efectivo $64500</a></li>
-                </ul>
-            </p>
-        </article><!-- /content -->
-        <footer data-role="footer">
-            <h1>Footer</h1>
-        </footer><!-- /footer -->
-    </section><!-- /page -->
-
-<!-- ***************** CAJAS ********************** -->
-      <section id="cajas" data-role="page">
-        <header data-role="header">
-            <a href="#tienda" data-role="button">Atras</a> <h1>Ventas Tienda Mall Mirage</h1>
-        </header><!-- /header -->
-        <article data-role="content">
-             <p>
-                <ul data-role="listview">
-                    <li><a href="#detalleCaja">Caja 254 - Abierta $34000</a></li>
-                    <li><a href="#detalleCaja">Caja 136 - Abierta $11000</a></li>
-                    <li><a href="#detalleCaja">Caja 135 - Cerrada $54000</a></li>
-                    <li><a href="#detalleCajas">Caja 133 - Abierta $34000</a></li>
-                    <li><a href="#detalleCaja">Caja 132 - Cerrada $64000</a></li>
-                  
+                <ul id="listarVentas" data-role="listview">
+                 
                 </ul>
             </p>
         </article><!-- /content -->
         <footer data-role="footer" data-position="fixed">
             <h1>Footer</h1>
-        </footer><!-- /footer -->
+        </footer>
+    </section><!-- /page -->
+
+<!-- ***************** CAJAS ********************** -->
+      <section id="cajas" data-role="page">
+        <header data-role="header">
+            <a href="#tienda" data-role="button">Atras</a> <h1 id="nombreCajaTienda">/h1>
+        </header><!-- /header -->
+        <article data-role="content">
+             <p>
+                <ul data-role="listview" id="listarCajas">
+                </ul>
+            </p>
+        </article><!-- /content -->
+        <footer data-role="footer" data-position="fixed">
+            <h1>Footer</h1>
+        </footer>
     </section><!-- /page -->
 
 <!-- ***************** DETALLE VENTAS ********************** -->
 
     <section id="detalleVenta" data-role="page">
         <header data-role="header">
-          <a href="#ventas" data-role="button">Atras</a>  <h1>Boleta 174</h1><a href="#ventas" data-role="button">eliminar</a>
+          <a href="#ventas" data-role="button">Atras</a>  <h1 id="nombreBoleta"></h1><a href="#dialogPage" data-rel="dialog" data-role="button">Eliminar</a>
         </header><!-- /header -->
         <article data-role="content">
            <ul data-role="listview" data-inset="true" id="lista">
                 
                 </ul>
-                <script>
-                $(document).ready(function() {
-                $.ajax({
-                  url: 'http://iworld.ingehost.cl/movil/detalleventa/2?format=json',
-                  type: 'GET',
-                  dataType: 'json',
-                  success: function(data) { 
-                    $('#formaDePago').text(data.formaDePago);
-                    $('#total').text(data.total);
-                    $('#vendedor').text(data.vendedor);
-                    
-                    },
-                  error: function() { alert('no se puedo!'); },
-                  beforeSend: setHeader
-                });
-              });
-
-              function setHeader(xhr) {
-                xhr.setRequestHeader('Authorization', 'Token 89c44636e3f071baa0f67fe4964e6ae244d0fad7');
-              }
-                </script>
-
+              
                 <h2>
                 Detalle venta
             </h2>
             <div class="ui-grid-a">
                 <div class="ui-block-a">
-                    Forma de Pago:
+                    Forma de Pago: <span id="formaDePago"></span>
                 </div>
-                <div class="ui-block-b" id="formaDePago">
+                <div class="ui-block-b">
                 </div>
                 <div class="ui-block-a">
-                    Total:
+                    Total: <span id="total"></span>
                 </div>
                 <div class="ui-block-b"id="total">
                 </div>
                 <div class="ui-block-a">
-                    Vendedor 
+                    Vendedor: <span id="vendedor"></span>  
                 </div>
                 <div class="ui-block-b"id="vendedor">
                 </div>
@@ -189,34 +162,59 @@
             <h2>
                 Productos
             </h2>
-            <ul data-role="listview" data-divider-theme="b" data-inset="true">
-                <li data-theme="c">
+
+             
+            <ul id="listarProductos" data-role="listview" data-divider-theme="b" data-inset="true">
+                <!-- <li data-theme="c">
                     <a href="#" data-transition="slide">
                         Button
                     </a>
-                </li>
+                </li> -->
             </ul>
         </article><!-- /content -->
-        <footer data-role="footer">
+        <footer data-role="footer" data-position="fixed">
             <h1>Footer</h1>
         </footer><!-- /footer -->
     </section><!-- /page -->
 
     <section id="detalleCaja" data-role="page" >
         <header data-role="header">
-            <a href="#cajas" data-role="button">Atras</a>  <h1>Caja 174</h1> <a href="#ventas" data-role="cajas">Eliminar</a> 
+            <a href="#cajas" data-role="button">Atras</a>  <h1 id="nombreCaja"></h1> <a href="#ventas" data-role="cajas">Eliminar</a> 
         </header><!-- /header -->
         <article data-role="content">
             <p>Content</p>
         </article><!-- /content -->
         <footer data-role="footer" data-position="fixed">
             <h1>Footer</h1>
-        </footer><!-- /footer -->
+        </footer>
     </section><!-- /page -->
-<script src="js/servicios.js"></script>
-    <script src="js/eventos.js"></script>
-</body>
+
+    <div data-role="page" id="dialogPage">
+      <div data-role="header">
+        <h2>Dialog</h2>
+      </div>
+      <div data-role="content">
+        <p>Eliminar ???</p>
+      </div>
+    </div>
+ 
+    <script type="text/javascript" src="js/servicios.js"></script>
+    <script type="text/javascript" src="js/eventos.js"></script>
+    <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
     
+  
+  <!-- TEMPLATE LISTA DE TIENDAS-->
+  <script type="text/template" id="template_listaTiendas">
+        <% _.each(items, function(items) { %>
+            <a href="#tienda" data-role="button" onclick="App.loadTienda(<%= items.id %> ,'<%= items.nombre %>')" > <%= items.nombre %> </a>
+        <% }) %>
+  </script>
+
+
+</body>
+
+
+  
 </html>
 
 
