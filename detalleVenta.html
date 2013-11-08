@@ -23,16 +23,16 @@
 			<ul data-role="listview" data-inset="true" id="lista">
 			    
 			</ul>
-		
-
-                <script>
+			<script>
             $(document).ready(function() {
             $.ajax({
               url: 'http://iworld.ingehost.cl/movil/detalleventa/2?format=json',
               type: 'GET',
               dataType: 'json',
               success: function(data) { 
-                   alert("ok")
+                $('#formaDePago').text(data.formaDePago);
+                $('#total').text(data.total);
+                $('#vendedor').text(data.vendedor);
                 
                 },
               error: function() { alert('no se puedo!'); },
@@ -43,7 +43,7 @@
           function setHeader(xhr) {
             xhr.setRequestHeader('Authorization', 'Token 89c44636e3f071baa0f67fe4964e6ae244d0fad7');
           }
-            </script>
+			</script>
 
 		    <h2>
             Detalle venta
